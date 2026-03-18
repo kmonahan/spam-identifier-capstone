@@ -319,6 +319,18 @@ library(textutils)
 if (!require(caret))
   install.packages('caret')
 library(caret)
+if (!require(ggridges))
+  install.packages('ggridges')
+library(ggridges)
+if (!require(rpart))
+  install.packages('rpart')
+library(rpart)
+if (!require(randomForest))
+  install.packages('randomForest')
+library(randomForest)
+if (!require(foreach))
+  install.packages('foreach')
+library(foreach)
 ```
 
 ## Introduction
@@ -846,6 +858,21 @@ dataset. I used the same weighted F value for accuracy that has been
 used on models previously. Whatever parameter value gives the highest
 accuracy when the 25 tests are averaged together is what's used in the
 final model.
+
+```{r create_features, include=FALSE}
+train_set_features <- train_set |>
+  select(!message) |>
+  mutate(top_spam_words_count = unname(top_spam_words_count))
+control <- trainControl(summaryFunction = function(data, lev = NULL, model = NULL) {
+  f_val <- F_meas(
+    data$pred,
+    reference = data$obs,
+    relevant = "spam",
+    beta = 0.75
+  )
+  c(F1 = f_val)
+}, allowParallel = FALSE)
+```
 
 ```{r knn_tune}
 knn_fit <- train(
