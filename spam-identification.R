@@ -34,6 +34,18 @@ library(caret)
 if (!require(ggridges))
   install.packages('ggridges')
 library(ggridges)
+if (!require(doParallel))
+  install.packages(doParallel)
+library(doParallel)
+if (!require(foreach))
+  install.packages('foreach')
+library(foreach)
+if (!require(rpart))
+  install.packages('rpart')
+library(rpart)
+if (!require(randomForest))
+  install.packages('randomForest')
+library(randomForest)
 
 #############################################################################
 # Load and clean data
@@ -186,9 +198,9 @@ top_spam_words <- ham_spam_odds |> filter(odds_ratio >= 10) |> pull('word')
 # Count how many times any of those words appear in the message
 count_spam_words <- function(data, word_list = top_spam_words) {
   data |>
-    mutate(top_50_word_count = sapply(message, function(m) {
+    mutate(top_spam_words_count = sapply(message, function(m) {
       words <- list_c(tokenize_words(m, lowercase = TRUE, strip_punct=TRUE))
-      sum(words %in% top_50_spam_words)
+      sum(words %in% top_spam_words)
     }))
 }
 
@@ -251,6 +263,8 @@ train_set <- add_capital_columns(train_set)
 test_set <- add_capital_columns(test_set)
 
 # Box plot to compare total number of capital letters by type
+# There's a lot of outliers here, so not sure box plot is the right
+# visualization.
 train_set |> 
   ggplot(aes(type, capital_count, fill=type)) + 
   xlab("Message type") +
@@ -259,41 +273,67 @@ train_set |>
   geom_boxplot()
 
 # Ridge plot to compare the total number of capital letters by type
+# so we can better see the shape.
 train_set |> 
   ggplot(aes(capital_count, type, fill=type)) + 
   ylab("Message type") +
   xlab("Number of capital letters (A-Z)") +
-  ggtitle("Comparison of number of capital letters per message by message type") +
-  geom_density_ridges(bandwidth = 1, alpha=0.5)
+  ggtitle("Comparison of total number of capital letters per message by message type") +
+  geom_density_ridges(bandwidth = 2, alpha=0.5)
 
-# Box plot to compare longest string
-train_set |> 
-  ggplot(aes(type, longest_capitals, fill=type)) + 
-  xlab("Message type") +
-  ylab("Longest string of capital letters") +
-  ggtitle("Comparison of lenght of the longest string of capital letters per message by message type") +
-  geom_boxplot()
-
+# Ridge plot to compare the length of the longest string
 train_set |> 
   ggplot(aes(longest_capitals, type, fill=type)) + 
-  ylab("Message type") +
+  xlab("# of messages") +
   ylab("Longest string of capital letters") +
-  ggtitle("Comparison of lenght of the longest string of capital letters per message by message type") +
-  geom_density_ridges(bandwidth = 1.25, alpha=0.5)
+  ggtitle("Comparison of length of the longest string of capital letters per message by message type") +
+  geom_density_ridges(bandwidth=2, alpha=0.5)
+
+# Histogram plot to compare the length of the longest string.
+# I prefer the ridge plot here because it's easier to see the overlap. Both
+# spam and ham messages might have 0 capitals, but spam has a wider distribution
+# and peaks around 5-10 characters. Using the ridge above in the final report.
+train_set |> 
+  ggplot(aes(longest_capitals, fill=type)) + 
+  xlab("# of messages") +
+  ylab("Longest string of capital letters") +
+  ggtitle("Comparison of length of the longest string of capital letters per message by message type") +
+  geom_histogram(binwidth=5) +
+  facet_wrap(type ~ .)
+
+# Looking only at messages where the longest capital letter string is greater
+# than zero, can see that while the shapes are similar, spam messages are more
+# concentrated in the 0-25 character range, while ham messages, though also
+# peaking in the same spot, have much more of a tail
+train_set |> 
+  filter(longest_capitals > 0) |>
+  ggplot(aes(longest_capitals, type, fill=type)) + 
+  xlab("# of messages") +
+  ylab("Longest string of capital letters") +
+  ggtitle("Comparison using only messages with a capital-letter string") +
+  geom_density_ridges(bandwidth=2, alpha=0.5)
 
 # Finally, what about the total length of the message?
 train_set <- train_set |> mutate(msg_length = nchar(message))
 test_set <- test_set |> mutate(msg_length = nchar(message))
 
-# We can see a difference here although, as with capital letters, it's not
-# as pronounced as some of the others. But spam messages do seem to be more
-# often longer than ham messages up to a point. Messages above 250 characters
-# are uncommon, but they're ham when they do appear.
-train_set |> ggplot(aes(type, msg_length, fill=type)) + geom_boxplot()
+# Can see that the median ham message is shorter than the median spam message.
+# Both types contain many outliers however, so a short message is not necessarily
+# ham and vice-versa.
+train_set |> 
+  ggplot(aes(type, msg_length, fill=type)) + 
+  xlab("Message type") +
+  ylab("Total message length") +
+  ggtitle("Comparison of message lengths by message type") +
+  geom_boxplot()
 
 # Model 1: Baseline
-# Just guess, assuming equal likelihood messages are spam or ham
-guess_y_hat <- sample(c('spam', 'ham'), nrow(test_set), replace = TRUE) |>
+
+# Proportion of spam messages
+p_spam <- sum(train_set$type == 'spam') / nrow(train_set)
+
+# Just guess, assuming the same proportion of spam as in the training set
+guess_y_hat <- sample(c('spam', 'ham'), nrow(test_set), replace = TRUE, prob = c(p_spam, 1 - p_spam)) |>
   factor(levels = levels(test_set$type))
 # Use F_meas to calculate the F1 score. Use beta of 0.75 because it's more
 # important that a user not miss a real message.
@@ -305,10 +345,30 @@ guess_f_meas <- F_meas(
 )
 guess_f_meas
 
-# Model 2: Based on the longest number. Of the various factors,
-# a long number had the most dramatic difference. If a number has more than 5
-# digits, which is also the length of those text short numbers, assume it's spam.
-long_number_y_hat <- ifelse(test_set$longest_number >= 5, "spam", "ham") |>
+# Model 2: Longest number
+
+# From the box plot, 5 looks like a good cutoff, but instead of just guessing,
+# use the train set to maximize the F-value.
+max_digit_cutoffs <- seq(0, 15)
+
+# Run tests in parallel. Honestly, this might be overkill given the size of the
+# data set, but I'm still scarred from the movie recommendation run times.
+# Plus it might be more useful when when we get into the more complex models.
+cores <- min(detectCores() - 1, 15)
+registerDoParallel(cores)
+digit_cutoff_results <- foreach(max_digit_cutoff=max_digit_cutoffs, .packages=c("caret"), .combine=c) %dopar% {
+  long_number_y_hat <- ifelse(train_set$longest_number >= max_digit_cutoff, "spam", "ham") |>
+    factor(levels = levels(train_set$type))
+  F_meas(
+    long_number_y_hat,
+    reference = train_set$type,
+    relevant = "spam",
+    beta = 0.75
+  )
+}
+stopImplicitCluster()
+cutoff <- max_digit_cutoffs[which.max(digit_cutoff_results)]
+long_number_y_hat <- ifelse(test_set$longest_number >= cutoff, "spam", "ham") |>
   factor(levels = levels(test_set$type))
 long_number_f_meas <- F_meas(
   long_number_y_hat,
@@ -318,31 +378,259 @@ long_number_f_meas <- F_meas(
 )
 long_number_f_meas
 
-# Model 3: Using linear regression with all factors
-# TODO: Isn't there a way to do all but one column instead?
-# TODO: Why linear regression?
-lm_all_fit <- mutate(train_set, y = as.numeric(type == "spam")) |> 
-  lm(y ~ top_50_word_count + num_count + longest_number + capital_count + longest_capitals + msg_length, data = _)
-lm_all_p_hat <- predict(lm_all_fit, test_set)
-lm_all_y_hat <- ifelse(lm_p_hat > 0.5, "spam", "ham") |> 
+# Model 3: Using logistic regression to predict spam or ham based on longest 
+# number
+glm_digit_length_fit <- train_set |>
+  mutate(y = as.numeric(type == "spam")) |>
+  glm(y ~ longest_number, data = _, family="binomial")
+# Predict the results on the test set, using the model created on the training set
+# Returns the likelihood that a message is spam
+glm_digit_length_p_hat <- predict(glm_digit_length_fit, newdata=test_set, type="response")
+# Translate those probabilities to predictions by saying that any message with
+# a greater than 50% chance of being spam is spam
+glm_digit_length_y_hat <- ifelse(glm_digit_length_p_hat > 0.5, "spam", "ham") |> 
   factor(levels = levels(test_set$type))
-lm_all_f_meas <- F_meas(
-  lm_all_y_hat,
+glm_digit_length_f_meas <- F_meas(
+  glm_digit_length_y_hat,
   reference = test_set$type,
   relevant = "spam",
   beta = 0.75
 )
-lm_all_f_meas
+glm_digit_length_f_meas
 
-# TODO: Is there a point to having both model 3 and model 4?
+# GLM model performs less well than having a single cutoff. While spam messages
+# may have more digits, the data isn't approximately bivariate normal.
+
+# What if we look at two variables, such as number of letters and number of
+# capital letters?
+train_set |>
+  ggplot(aes(num_count, capital_count, color = type)) +
+  xlab("Total number of digits") +
+  ylab("Total number of capital letters") +
+  geom_point()
+
+# Although we can see some clear groupings between spam messages and ham messages
+# the boundary is non-linear.
 
 
-# glm (and also review how that's different from lm)
-# Loess (and also review loess)
-# K-nearest-neighbors
-# Classifciation tree
-# Random forest
-# Ensemble?
+# Create a data frame with just the features we need, for easier model fitting.
+# This way, we don't have to list them out each time. Message is removed and
+# top_spam_words_count converted to an unnamed vector.
+train_set_features <- train_set |>
+  select(!message) |>
+  mutate(top_spam_words_count = unname(top_spam_words_count))
 
-# Is the answer going to end up being just checking if there's a number that's
-# 5 digits long?
+# Model 4: KNN
+
+# Set up common parameters for controlling the train function, which we'll
+# use throughout. Define the F1 statistic, calculated using the same F_meas
+# function and beta as used previously, so we can use it to determine accuracy
+# when tuning
+control <- trainControl(summaryFunction = function(data, lev = NULL, model = NULL) {
+  f_val <- F_meas(
+    data$pred,
+    reference = data$obs,
+    relevant = "spam",
+    beta = 0.75
+  )
+  c(F1 = f_val)
+}, allowParallel = TRUE)
+
+# Use caret 'train' method to use bootstrap samples to choose the number of neighbors
+# (k) that gives us the best result. Use bootstrap here so we're choosing
+# a random sampling of the *training* set, not the test set. The test set is 
+# only used to check the accuracy of the final KNN model. Default value is 25 
+# bootstrapped samples for each value tried
+registerDoParallel(cores)
+knn_fit <- train(
+  type ~ ., 
+  method = "knn", 
+  data = train_set_features, 
+  trControl = control, 
+  metric = "F1",
+  tuneGrid = data.frame(k = c(3, 5, 7, 9, 11))
+)
+knn_fit$bestTune
+knn_y_hat <- predict(knn_fit, newdata = test_set, type="raw")
+knn_f_meas <- F_meas(
+  knn_y_hat,
+  reference = test_set$type,
+  relevant = "spam",
+  beta = 0.75
+)
+knn_f_meas
+
+# Model 5: Classification Tree
+class_tree_fit <- train(
+  type ~ .,
+  method = "rpart",
+  data=train_set_features,
+  trControl = control,
+  metric = "F1",
+  # Try a range of complexity parameters, from 0 to 0.1
+  tuneGrid = data.frame(cp = seq(0.0, 0.1, len = 25)),
+)
+class_tree_y_hat <- predict(class_tree_fit, newdata = test_set, type="raw")
+class_tree_f_meas <- F_meas(
+  class_tree_y_hat,
+  reference = test_set$type,
+  relevant = "spam",
+  beta = 0.75
+)
+class_tree_f_meas
+
+# Graph the classification tree so we can see what rules were actually used
+plot(class_tree_fit$finalModel, margin = 0.1)
+text(class_tree_fit$finalModel, cex = 0.75)
+
+# Model 6: Random forest
+random_forest_fit <- train(
+  type ~ .,
+  method = "rf",
+  data = train_set_features,
+  trControl = control,
+  metric = "F1",
+  # Tune the number of variables randomly assigned per split
+  tuneGrid=data.frame(mtry=seq(1, 6))
+)
+random_forest_y_hat <- predict(random_forest_fit, newdata = test_set, type="raw")
+random_forest_f_meas <- F_meas(
+  random_forest_y_hat,
+  reference = test_set$type,
+  relevant = "spam",
+  beta = 0.75
+)
+random_forest_f_meas
+stopImplicitCluster()
+
+# Show the relative importance of various factors in the final model
+importance(random_forest_fit$finalModel)
+
+
+# Use bootstrap sampling
+folds = createResample(train_set$type, times = 5)
+guess_cv <- foreach(fold=folds, .combine = c) %do% {
+  partition <- train_set[fold,]
+  y_hat <- sample(c('spam', 'ham'), nrow(partition), replace = TRUE, prob = c(p_spam, 1 - p_spam)) |>
+    factor(levels = levels(partition$type))
+  F_meas(
+    y_hat,
+    reference = partition$type,
+    relevant = "spam",
+    beta = 0.75
+  )
+}
+guess_accuracy <- mean(guess_cv)
+
+longest_number_cv <- foreach(fold=folds, .combine = c) %do% {
+  partition <- train_set[fold,]
+  y_hat <- ifelse(partition$longest_number >= cutoff, "spam", "ham") |>
+    factor(levels = levels(partition$type))
+  F_meas(
+    y_hat,
+    reference = partition$type,
+    relevant = "spam",
+    beta = 0.75
+  )
+}
+longest_number_accuracy <- mean(longest_number_cv)
+
+glm_digit_cv <- foreach(fold=folds, .combine = c) %do% {
+  partition <- train_set[fold,]
+  p_hat <- predict(glm_digit_length_fit, newdata=partition, type="response")
+  y_hat <- ifelse(p_hat > 0.5, "spam", "ham") |> 
+    factor(levels = levels(partition$type))
+  F_meas(
+    y_hat,
+    reference = partition$type,
+    relevant = "spam",
+    beta = 0.75
+  )
+}
+glm_digit_accuracy <- mean(glm_digit_cv)
+
+knn_cv <- foreach(fold=folds, .combine = c) %do% {
+  partition <- train_set[fold,]
+  y_hat <- predict(knn_fit, newdata = partition, type="raw")
+  F_meas(
+    y_hat,
+    reference = partition$type,
+    relevant = "spam",
+    beta = 0.75
+  )
+}
+knn_accuracy <- mean(knn_cv)
+
+class_tree_cv <- foreach(fold=folds, .combine = c) %do% {
+  partition <- train_set[fold,]
+  y_hat <- predict(class_tree_fit, newdata = partition, type="raw")
+  F_meas(
+    y_hat,
+    reference = partition$type,
+    relevant = "spam",
+    beta = 0.75
+  )
+}
+class_tree_accuracy <- mean(class_tree_cv)
+
+random_forest_cv <- foreach(fold=folds, .combine = c) %do% {
+  partition <- train_set[fold,]
+  y_hat <- predict(random_forest_fit, newdata = partition, type="raw")
+  F_meas(
+    y_hat,
+    reference = partition$type,
+    relevant = "spam",
+    beta = 0.75
+  )
+}
+random_forest_accuracy <- mean(random_forest_cv)
+
+tibble(
+  Models=c('Guessing', 'Longest number', 'Logistic regression', 'K-Nearest Neighbor', 'Classification Tree', 'Random Forest'),
+  `F-Values`=c(guess_accuracy, longest_number_accuracy, glm_digit_accuracy, knn_accuracy, class_tree_accuracy, random_forest_accuracy)
+)
+
+
+# long_number_y_hat and glm_digit_y_hat look at the same feature, the longest
+# number of digits. Try with just longest number, which did slightly better
+# in my bootstrap.
+
+# But, this gives us an even number. What to do in the case of ties? Since
+# not misclassifying ham is more important than not misclassifying spam, ties
+# will go to the ham side
+ensemble_vote_fit <- cbind(long_number_y_hat, class_tree_y_hat, random_forest_y_hat, knn_y_hat)
+ensemble_vote_y_hat <- apply(ensemble_vote_fit, 1, function(r) {
+  ifelse(sum(r == 2) >= 3, 'spam', 'ham')
+}) |> factor(levels = levels(test_set$type))
+ensemble_vote_f_meas <- F_meas(
+  ensemble_vote_y_hat,
+  reference = test_set$type,
+  relevant = "spam",
+  beta = 0.75
+)
+ensemble_vote_f_meas
+
+# Re-generate predictions to get the probability of the item being spam
+knn_p_hat <- predict(knn_fit, newdata = test_set , type = "prob")['spam']
+class_tree_p_hat <- predict(class_tree_fit, newdata = test_set, type = "prob")['spam']
+random_forest_p_hat <- predict(random_forest_fit, newdata = test_set, type = "prob")['spam']
+ensemble_mean_fit <- cbind(knn_p_hat, class_tree_p_hat, random_forest_p_hat)
+# Get the mean probability across all three models. If it's greater than 0.5
+# likelihood of being spam, classify it as such
+ensemble_mean_y_hat <- apply(ensemble_mean_fit, 1, function(r) {
+  ifelse(mean(r) > 0.5, 'spam', 'ham')
+}) |> factor(levels = levels(test_set$type))
+ensemble_mean_f_meas <- F_meas(
+  ensemble_mean_y_hat,
+  reference = test_set$type,
+  relevant = "spam",
+  beta = 0.75
+)
+ensemble_mean_f_meas
+
+
+tibble(
+  Models=c('Guessing', 'Longest number', 'Logistic regression', 'K-Nearest Neighbor', 'Classification Tree', 'Random Forest', 'Ensemble Voting', 'Ensemble Mean'),
+  `F-Values`=c(guess_f_meas, long_number_f_meas, glm_digit_length_f_meas, knn_f_meas, class_tree_f_meas, random_forest_f_meas, ensemble_vote_f_meas, ensemble_mean_f_meas)
+)
+confusionMatrix(random_forest_y_hat, test_set$type, positive = "spam")
