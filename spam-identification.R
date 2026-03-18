@@ -1,17 +1,3 @@
-# Almeida, T. & Hidalgo, J. (2011). SMS Spam Collection [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5CC84.
-
-# https://statistics.arabpsychology.com/calculate-f1-score-in-r-including-example/
-# https://www.geeksforgeeks.org/machine-learning/what-is-f-beta-score/
-# https://www.tutorialpedia.org/blog/check-whether-all-elements-of-a-list-are-in-equal-in-r
-# https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/evaluation-metrics.html#balanced-accuracy-and-f_1-score
-# https://stackoverflow.com/questions/28467068/how-to-add-a-row-to-a-data-frame-in-r#44150746
-# https://www.tidytextmining.com/tidytext.html
-# https://docs.ropensci.org/tokenizers/
-# https://ggplot2.tidyverse.org/reference/geom_histogram.html
-# https://stackoverflow.com/questions/30111032/counting-the-number-of-capital-letters-in-each-row-in-r#30112340
-
-# https://archive.ics.uci.edu/dataset/94/spambase
-
 # Libraries
 if (!require(tidyverse))
   install.packages('tidyverse')
@@ -81,6 +67,7 @@ messages |>
 # contain them. tokenize_words() is what unnest_tokens uses to split the words
 # into tokens. Using that here in order to use the tokens as part of the filtering
 # rather than as a separate data frame.
+# See @TidyText in the report
 messages |>
   filter(sapply(message, function(m) {
     words <- list_c(tokenize_words(m, lowercase = TRUE, strip_punct=TRUE))
@@ -121,6 +108,8 @@ phone_test_data <- c(
   'Phone number 012 345 6789'
 )
 # Should all be identical
+# via https://www.tutorialpedia.org/blog/check-whether-all-elements-of-a-list-are-in-equal-in-r/
+# See @Tutorialpedia in the report
 all(sapply(convert_phone_numbers(phone_test_data), function(n) {
   identical(n, phone_test_data[1])
 }))
@@ -177,6 +166,7 @@ ham_spam_odds <- train_set_words |>
   spread(type, n, fill = 0) |>
   # Compute odds ratio, using the 0.5 correction
   # This follows https://rafalab.dfci.harvard.edu/dsbook/text-mining.html
+  # See @Irizarry1 in the report
   mutate(odds_ratio = (spam + 0.5) / (sum(spam) - spam + 0.5) /
            ((ham + 0.5) / (sum(ham) - ham + 0.5))) |>
   # Order by odds

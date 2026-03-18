@@ -2,7 +2,301 @@
 title: "Identifying Spam Tests Through Machine Learning"
 author: "KJ Monahan"
 date: "`r Sys.Date()`"
-output: html_document
+output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: 72
+references:
+  - type: report
+    id: PewResearchCenter2025
+    author:
+      - family: Gottfried
+        given: Jeffrey
+      - family: Park
+        given: Eugenie
+      - family: Anderson
+        given: Monica
+    title: "Online Scams and Attacks in America Today"
+    container-title: "Pew Research Center"
+    URL: https://www.pewresearch.org/internet/2025/07/31/online-scams-and-attacks-in-america-today/
+    issued:
+      date-parts:
+        - - 2025
+          - 7
+          - 31
+    accessed:
+      date-parts:
+        - - 2026
+          - 3
+          - 15
+  - type: post-weblog
+    id: OrbitMedia2025
+    author:
+      - family: Crestodina
+        given: Andy
+    title: "2025 Spam Report: The Abuse of Trust in Email and Social (now with AI)"
+    container-title: "Orbit Media Studios"
+    URL: https://www.orbitmedia.com/blog/spam-statistics/
+    issued:
+      date-parts:
+        - - 2025
+          - 12
+          - 2
+    accessed:
+      date-parts:
+        - - 2026
+          - 3
+          - 15
+  - type: standard
+    id: CTIAMessaging
+    author: "CTIA"
+    title: "Messaging Principles and Best Practices"
+    URL: https://api.ctia.org/wp-content/uploads/2023/05/230523-CTIA-Messaging-Principles-and-Best-Practices-FINAL.pdf
+    issued:
+      date-parts:
+        - - 2023
+          - 5
+    accessed:
+      date-parts:
+        - - 2026
+          - 3
+          - 15
+  - type: standard
+    id: CTIASecurity
+    author: "CTIA"
+    title: "Messaging Security Best Practices"
+    URL: https://api.ctia.org/wp-content/uploads/2025/10/Messaging-Security-Best-Practices-_October-2025.pdf
+    issued:
+      date-parts:
+        - - 2025
+          - 10
+    accessed:
+      date-parts:
+        - - 2026
+          - 3
+          - 15
+  - type: webpage
+    id: FTC
+    author: "Federal Trade Commission"
+    container-title: "Federal Trade Commission Consumer Advice"
+    URL: https://consumer.ftc.gov/articles/how-recognize-report-spam-text-messages
+    issued:
+      date-parts:
+        - - 2022
+          - 7
+    accessed:
+      date-parts:
+        - - 2026
+          - 3
+          - 15
+  - type: report
+    id: CTIAAnnualSurvey
+    author: "CTIA"
+    title: "2025 Annual Survey Highlights"
+    URL: https://api.ctia.org/wp-content/uploads/2025/09/2025-Annual-Survey-Highlights.pdf
+    issued:
+      date-parts:
+        - - 2025
+          - 9
+          - 8
+    accessed:
+      date-parts:
+        - - 2026
+          - 3
+          - 15
+  - type: paper-conference
+    id: Almeida2011
+    container-title: "DocEng '11: Proceedings of the 11th ACM symposium on Document engineering"
+    publisher: "Association for Computing Machinery"
+    title: "Contributions to the Study of SMS Spam Filtering:New Collection and Results"
+    author:
+      - family: Almeida
+        given: Tiago
+      - family: María Gómez Hidalgo
+        given: José
+      - family: Yamakami
+        given: Akebo
+    URL: https://dl.acm.org/doi/epdf/10.1145/2034691.2034742
+    published:
+      date-parts:
+        - - 2011
+          - 9
+          - 19
+    accessed:
+      date-parts:
+        - - 2026
+          - 3
+          - 15
+    page: 259-262
+  - type: dataset
+    id: SMSDataset
+    author:
+      - family: Almeida
+        given: Tiago
+      - family: María Gómez Hidalgo
+        given: José
+    title: "SMS Spam Collection"
+    publisher: "UCI Machine Learning Repository"
+    DOI: https://doi.org/10.24432/C5CC84
+    URL: https://archive.ics.uci.edu/dataset/228/sms+spam+collection
+    issued: 2011
+    accessed:
+      date-parts:
+        - - 2026
+          - 3
+          - 9
+  - type: book
+    medium: Web
+    id: Irizarry2
+    edition: 2
+    title: "Introduction to Data Science: Statistics and Prediction Algorithms Through Case Studies"
+    URL: https://rafalab.dfci.harvard.edu/dsbook-part-2/
+    author:
+      - family: Irizarry
+        given: Rafael
+  - type: article-journal
+    id: Zantvoort2024
+    title: "Estimation of minimal data sets sizes for machine learning predictions in digital mental health interventions"
+    container-title: "npj Digital Medicine"
+    author:
+      - family: Zantvoort
+        given: Kirsten
+      - family: Nacke
+        given: Barbara
+      - family: Görlich
+        given: Dennis
+      - family: Hornstein
+        given: Silvan
+      - family: Jacobi
+        given: Corinna
+      - family: Funk
+        given: Burkhardt
+    DOI: https://doi.org/10.1038/s41746-024-01360-w
+    URL: https://www.nature.com/articles/s41746-024-01360-w
+    issued:
+      date-parts:
+        - 2024
+        - 12
+        - 18
+    accessed:
+      date-parts:
+        - 2026
+        - 3
+        - 15
+  - type: webpage
+    id: Bobbitt2021
+    title: "How to Interpret Odds Ratios"
+    URL: https://www.statology.org/interpret-odds-ratios/
+    container-title: Statology
+    author:
+      - family: Bobbitt
+        given: Zach
+    issued:
+      date-parts:
+        - - 2021
+          - 8
+          - 26
+    accessed:
+      date-parts:
+        - - 2026
+          - 3
+          - 15
+  - type: post-weblog
+    id: Broni2025
+    title: "Major Moments In Emoji History: 1995* to 2025"
+    container-title: "Emojipedia"
+    URL: https://blog.emojipedia.org/major-moments-in-emoji-history-1995-to-2025/
+    author:
+      - family: Broni
+        given: Keith
+    issued:
+      date-parts:
+        - - 2025
+          - 7
+          - 16
+    accessed:
+      date-parts:
+        - - 2026
+          - 3
+          - 15
+  - type: book
+    id: Irizarry1
+    medium: web
+    title: "Introduction to Data Science"
+    URL: https://rafalab.dfci.harvard.edu/dsbook/index.html
+    edition: 1
+    author:
+      - family: Irizarry
+        given: Rafael
+  - type: webpage
+    id: GeeksForGeeksKNN
+    URL: https://www.geeksforgeeks.org/machine-learning/k-nearest-neighbours/
+    container-title: "Geeks for Geeks"
+    title: "K-Nearest Neighbor(KNN) Algorithm"
+    issued:
+      date-parts:
+        - - 2026
+          - 3
+          - 12
+    accessed:
+      date-parts:
+        - - 2026
+          - 3
+          - 17
+  - type: webpage
+    id: GeeksForGeeksFBeta
+    URL: https://www.geeksforgeeks.org/machine-learning/what-is-f-beta-score/
+    container-title: "Geeks for Geeks"
+    title: "What is F-Beta Score?"
+    issued:
+      date-parts:
+        - - 2025
+          - 7
+          - 23
+    accessed:
+      date-parts:
+        - - 2026
+          - 3
+          - 9
+  - type: webpage
+    id: Tutorialpedia
+    URL: https://www.tutorialpedia.org/blog/check-whether-all-elements-of-a-list-are-in-equal-in-r/
+    container-title: "TutorialPedia.org"
+    title: "How to Check if All Elements of a List Are Equal in R: Beyond Pairwise identical() – Native Solutions & Custom Functions"
+    issued:
+      date-parts:
+        - - 2025
+          - 11
+          - 21
+    accessed:
+      date-parts:
+        - - 2026
+          - 3
+          - 11
+  - type: chapter
+    id: TidyText
+    URL: https://www.tidytextmining.com/tidytext.html
+    title: "The tidy text format"
+    container-title: "Text Mining with R: A Tidy Approach"
+    medium: "Web"
+    author:
+      - family: Silge
+        given: Julia
+      - family: Robinson
+        given: David
+    chapter: 1
+    issued:
+      date-parts:
+        - - 2025
+          - 4
+          - 7
+    accessed:
+      date-parts:
+        - - 2026
+          - 3
+          - 12
+nocite: |
+  @*      
 ---
 
 ```{r setup, include=FALSE}
@@ -29,51 +323,58 @@ library(caret)
 
 ## Introduction
 
-Your phone dings. You check your texts, expecting to see a message from a friend
-or family member, but instead, you see an ad. Spam text messages remain a common
-annoyance. A 2025 survey by Orbit Media found that 29% of respondents reported
-receiving spam messages daily or multiple times a day, with another 28% reporting
-receiving them weekly. Spam text messages can even be harmful. A Pew Research Center
-survey in 2025 found that 61% of U.S. adults reported receiving spam text messages
-at least weekly that attempted to get the receiver's personal information.
+Your phone dings. You check your texts, expecting to see a message from
+a friend or family member, but instead, you see an ad. Spam text
+messages remain a common annoyance. A 2025 survey by Orbit Media Studios found
+that 29% of respondents reported receiving spam messages daily or
+multiple times a day, with another 28% reporting receiving them weekly [-@OrbitMedia2025].
+Spam text messages can even be harmful. A Pew Research Center survey in
+2025 found that 61% of U.S. adults reported receiving spam text messages
+at least weekly that attempted to get the receiver's personal
+information [-@PewResearchCenter2025].
 
-The SMS Spam Collection dataset offers a set of spam text messages and genuine
-text messages ("ham") that can be used to build and test models to identify
-spam messages. The dataset consists of two variables: the classification ("spam" or "ham")
-and the text of the message. The dataset was released in 2011, and 5,574 messages,
-747 of which are spam and 4,827 of which are ham.
+The SMS Spam Collection dataset [@SMSDataset] offers a set of spam text messages and
+genuine text messages ("ham") that can be used to build and test models
+to identify spam messages. The dataset consists of two variables: the
+classification ("spam" or "ham") and the text of the message. The
+dataset was released in 2011, and 5,574 messages, 747 of which are spam
+and 4,827 of which are ham [@Almeida2011].
 
-One important consideration when comparing models is the cost of a false positive
-(identifying a legitimate message as spam) versus the cost of a false negative
-(identifying an unwanted message as ham). Text messages can be used for time-sensitive
-communication, with the expectation that the receiver will receive an alert immediately.
-Real-world examples range from letting someone know you've arrived to two-factor
-authentication codes that expire after a short period of time. CTIA, an organization
-representing wireless companies in America, also emphasizes the urgency of some
-communications, such as flight changes or fraud alerts, in their best practice
-guidelines for members. Governmental organizations can use text messaging to
-send emergency notifications, such as an active tornado warning or a water main
-breakage requiring a temporary boil order. Missing an urgent, or less time-sensitive
-but still meaningful message, can cause harm when people rely on text messaging
-for communication. CTIA's 2025 annual survey found that Americans exchanged nearly
-2.2 trillion text messages in 2025.
+One important consideration when comparing models is the cost of a false
+positive (identifying a legitimate message as spam) versus the cost of a
+false negative (identifying an unwanted message as ham). Text messages
+can be used for time-sensitive communication, with the expectation that
+the receiver will receive an alert immediately. Real-world examples
+range from letting someone know you've arrived to two-factor
+authentication codes that expire after a short period of time. CTIA, an
+organization representing wireless companies in America, also emphasizes
+the urgency of some communications, such as flight changes or fraud
+alerts, in their best practice guidelines for members [-@CTIAMessaging]. Governmental
+organizations can use text messaging to send emergency notifications,
+such as an active tornado warning or a water main breakage requiring a
+temporary boil order. Missing an urgent, or less time-sensitive but
+still meaningful message, can cause harm when people rely on text
+messaging for communication. CTIA's 2025 annual survey found that
+Americans exchanged nearly 2.2 trillion text messages in 2025 [-@CTIAAnnualSurvey].
 
-However, failing to identify a spam message could be harmful if the message is one of the
-many that attempts to defraud the receiver or trick them into handing over 
-personal information. The Orbit Media survey found that while ads were still
-the most common form of spam text messages, 37% of respondents said that the
-spam text messages they received asked for personal information. While the risk
-is real, Pew Research Center found that 71% of U.S. adults feel they know at
-least a fair amount about how to avoid falling for an online scam (a category that
-includes spam text messages). The FTC, among other organizations, provides guidance
-on how to recognize and report text message scams, which may help decrease the
-likelihood that someone seeing a spam message is actively harmed.
+However, failing to identify a spam message could be harmful if the
+message is one of the many that attempts to defraud the receiver or
+trick them into handing over personal information. The Orbit Media Studios
+survey found that while ads were still the most common form of spam text
+messages, 37% of respondents said that the spam text messages they
+received asked for personal information [-@OrbitMedia2025]. While the risk is real, Pew
+Research Center found that 71% of U.S. adults feel they know at least a
+fair amount about how to avoid falling for an online scam (a category
+that includes spam text messages) [-@PewResearchCenter2025]. The FTC, among other organizations,
+provides guidance on how to recognize and report text message scams [-@FTC],
+which may help decrease the likelihood that someone seeing a spam
+message is actively harmed.
 
-Considering the trade-offs, I determined that recall should be weighted more
-heavily than precision--it was more important that someone not miss a real text
-message than receive a spam message. To compare models, I calculated the F value,
-which combines precision and recall, with a beta of 0.75, weighting precision 0.75 
-times that of recall.
+Considering the trade-offs, I determined that recall should be weighted
+more heavily than precision--it was more important that someone not miss
+a real text message than receive a spam message. To compare models, I
+calculated the F value, which combines precision and recall, with a beta
+of 0.75, weighting precision 0.75 times that of recall [@Irizarry1; @GeeksForGeeksFBeta].
 
 **Final summary here**
 
@@ -81,8 +382,9 @@ times that of recall.
 
 ### Data Cleaning
 
-The SMSSpamCollection file is a tab-separated text file, with one line per message.
-I parsed it into rows and columns using `read_tsv`.
+The SMSSpamCollection file is a tab-separated text file, with one line
+per message. I parsed it into rows and columns using `read_tsv`.
+
 ```{r read_and_parse_file}
 lines <- readLines("data/SMSSpamCollection")
 rows <- str_split(lines, "\t")
@@ -91,10 +393,11 @@ colnames(messages) <- c("type", "message")
 head(messages, 10) |> tibble()
 ```
 
-When I tested splitting the messages by words to see what the most popular words
-used were, I saw "gt" and "lt" in the list. While "2", "ur", and "4" are all
-commonly-known texting abbreviations, especially in 2011, when the dataset was
-collected, "gt" and "lt" seemed like odd words to be sent so frequently.
+When I tested splitting the messages by words to see what the most
+popular words used were, I saw "gt" and "lt" in the list. While "2",
+"ur", and "4" are all commonly-known texting abbreviations, especially
+in 2011, when the dataset was collected, "gt" and "lt" seemed like odd
+words to be sent so frequently.
 
 ```{r most_popular_words_overall}
 messages |>
@@ -106,8 +409,9 @@ messages |>
   arrange(desc(n))
 ```
 
-Reviewing the messages that contain 'lt' or 'gt' indicates that these are
-HTML-encoded entities.
+Reviewing the messages that contain 'lt' or 'gt' indicates that these
+are HTML-encoded entities.
+
 ```{r review_lt_and_gt}
 messages |>
   filter(sapply(message, function(m) {
@@ -118,8 +422,9 @@ messages |>
   head()
 ```
 
-Using the `textutils` package, I decoded any encoded HTML entities and stripped
-any HTML tags that might still have been included.
+Using the `textutils` package, I decoded any encoded HTML entities and
+stripped any HTML tags that might still have been included.
+
 ```{r clean_html}
 messages <- messages |> mutate(message=HTMLrm(HTMLdecode(message)))
 messages |>
@@ -131,15 +436,18 @@ messages |>
   arrange(desc(n))
 
 ```
-Now the most popular words all make sense as words that might be used in texts.
 
-Next I standardized phone numbers. Even in the small sample of texts reviewed,
-I could see at least one phone number, and I knew that spam messages might instruct
-someone to call or a text a certain number. The presence of "call" and "text"
-as commonly used words supported that. But since phone numbers can take a variety
-of forms, I standardized several known forms to be all digits. This would also
-help me later when testing whether the presence of long strings of numbers, such as
-phone numbers or account numbers, would be indictative of a spam message.
+Now the most popular words all make sense as words that might be used in
+texts.
+
+Next I standardized phone numbers. Even in the small sample of texts
+reviewed, I could see at least one phone number, and I knew that spam
+messages might instruct someone to call or a text a certain number. The
+presence of "call" and "text" as commonly used words supported that. But
+since phone numbers can take a variety of forms, I standardized several
+known forms to be all digits. This would also help me later when testing
+whether the presence of long strings of numbers, such as phone numbers
+or account numbers, would be indictative of a spam message.
 
 ```{r standardize_phone_numbers}
 convert_phone_numbers <- function(s) {
@@ -154,22 +462,23 @@ messages <- messages |>
   mutate(message = convert_phone_numbers(message))
 ```
 
-
 ### Analysis
 
-Before doing any analysis, I split the data into training and test sets, so that
-I could look for differences between ham and spam text messages in the training
-set only. Knowing that, of course, the data set represents a small fraction of
-the spam and ham text messages sent, I wanted to use the test set as a stand in
-for the unknown or yet-to-be-set text messages that I couldn't analyze.
+Before doing any analysis, I split the data into training and test sets,
+so that I could look for differences between ham and spam text messages
+in the training set only. Knowing that, of course, the data set
+represents a small fraction of the spam and ham text messages sent, I
+wanted to use the test set as a stand in for the unknown or
+yet-to-be-set text messages that I couldn't analyze.
 
-Given the overall small size of the data set, I wanted to use as much data as
-possible for analysis and training. However, the test set still needs to be large
-enough to contain meaningful data. A split of 10%-20% of the data for the test
-set is common. I chose 20%, so there would be a little over one thousand messages
-in the test set. As 2024 study published in npj Digital Media proposed a minimum
-data set sizes of N=500-1000 to reduce overfitting, the remaining training set
-size of around 4400 messages should be sufficient.
+Given the overall small size of the data set, I wanted to use as much
+data as possible for analysis and training. However, the test set still
+needs to be large enough to contain meaningful data. A split of 10%-20%
+of the data for the test set is common [@Irizarry2]. I chose 20%, so there would be a
+little over one thousand messages in the test set. As 2024 study
+ proposed a minimum data set sizes of
+N=500-1000 to reduce overfitting [@Zantvoort2024], the remaining training set size of
+around 4400 messages should be sufficient.
 
 ```{r split_data, include=FALSE}
 set.seed(2016)
@@ -183,8 +492,8 @@ train_set <- messages[-test_index, ]
 
 #### Most Commonly Used Words
 
-I compared the mostly commonly-used words in the training set for ham messages
-versus spam messages.
+I compared the mostly commonly-used words in the training set for ham
+messages versus spam messages.
 
 ```{r commonly_used_words, echo=FALSE}
 train_set_words <- train_set |>
@@ -206,12 +515,13 @@ train_set_words |>
   arrange(desc(n))
 ```
 
-There are some apparent differences. "Free" is the second-most-often used words
-in spam texts but does not appear in the top 10 at all for ham texts. However,
-there is also overlap. "Call", "ur," "2", and "4" appear in both lists. Therefore,
-merely identifying words that are used often in spam messages are likely to result
-in a lot of false positives. Instead, I calculated the odds ratio for each word
-to identify those that were most likely to be in spam messages.
+There are some apparent differences. "Free" is the second-most-often
+used words in spam texts but does not appear in the top 10 at all for
+ham texts. However, there is also overlap. "Call", "ur," "2", and "4"
+appear in both lists. Therefore, merely identifying words that are used
+often in spam messages are likely to result in a lot of false positives.
+Instead, I calculated the odds ratio for each word to identify those
+that were most likely to be in spam messages. [@Irizarry1]
 
 ```{r spam_odds_ratio, echo=FALSE}
 ham_spam_odds <- train_set_words |>
@@ -225,17 +535,17 @@ ham_spam_odds |>
   tibble()
 ```
 
-This demonstrates that are definitely words that appear more often in spam messages
-than in ham messages. There are 7,513 unique words used in the training set.
-2,087 of those words have an odds ratio greater than 1, indicating a positive
-correlation between the presence of that word in the message and the message
-being spam. 759 of the words have an odds ratio greater than 10, indicating an
-even stronger positive correlation.
+This demonstrates that are definitely words that appear more often in
+spam messages than in ham messages. There are 7,513 unique words used in
+the training set. 2,087 of those words have an odds ratio greater than
+1, indicating a positive correlation between the presence of that word
+in the message and the message being spam. 759 of the words have an odds
+ratio greater than 10, indicating an even stronger positive correlation. [@Bobbitt2021]
 
-I then counted the number of times a word in the list of top spam words (those 
-that are at least 10 times more likely to appear in a spam message than a ham
-message in the training set) and added that data to both the training and test
-sets.
+I then counted the number of times a word in the list of top spam words
+(those that are at least 10 times more likely to appear in a spam
+message than a ham message in the training set) and added that data to
+both the training and test sets.
 
 ```{r count_spam_words}
 # Get the words with an odds ratio of 10 or more. That's the list of words
@@ -257,13 +567,14 @@ test_set <- count_spam_words(test_set)
 
 #### Numbers
 
-Previously I'd hypothesized that spam messages might be more likely to contain
-phone numbers or other long number strings, such as a (faux) bank account or
-package tracking number. In addition, the list of words more likely to be in
-spam messages contained several numbers.
+Previously I'd hypothesized that spam messages might be more likely to
+contain phone numbers or other long number strings, such as a (faux)
+bank account or package tracking number. In addition, the list of words
+more likely to be in spam messages contained several numbers.
 
-First, I added two counts to my data sets: the total number of digits appearing
-in the message and the length of the longest unbroken string of numbers.
+First, I added two counts to my data sets: the total number of digits
+appearing in the message and the length of the longest unbroken string
+of numbers.
 
 ```{r count_numbers}
 add_number_columns <- function(data) {
@@ -282,8 +593,8 @@ train_set <- add_number_columns(train_set)
 test_set <- add_number_columns(test_set)
 ```
 
-Spam messages tend to have both more digits overall and a longer string of
-digits than ham messages do.
+Spam messages tend to have both more digits overall and a longer string
+of digits than ham messages do.
 
 ```{r plot_number_comparison, echo=FALSE}
 # Box plot comparing total number of digits
@@ -305,18 +616,20 @@ train_set |>
 
 #### Capital Letters
 
-Like numbers, it's possible that capital letters could differ between spam and
-ham messages. However, with few options to convey tone over text messages (the
-dataset was published in 2011, which predates the global rise in emoji popularity
-from 2014 onward), capital letters or entire words or messages in all caps might
-be used by both spam messages and ham messages to convey excitement or urgency.
+Like numbers, it's possible that capital letters could differ between
+spam and ham messages. However, with few options to convey tone over
+text messages (the dataset was published in 2011, which predates the
+global rise in emoji popularity from 2014 onward [@Broni2025]), capital letters or
+entire words or messages in all caps might be used by both spam messages
+and ham messages to convey excitement or urgency.
 
-To see if there was any difference, I first counted both the total number of capital
-letters and the longest string that did not contain lowercase letters or digits.
-I did allow for white space and punctuation in order to detect the difference
-between a single word in all-caps and an entire message in all-caps, so long as
-the string started and ended with a capital letter (so removing trailing white
-space and punctuation).
+To see if there was any difference, I first counted both the total
+number of capital letters and the longest string that did not contain
+lowercase letters or digits. I did allow for white space and punctuation
+in order to detect the difference between a single word in all-caps and
+an entire message in all-caps, so long as the string started and ended
+with a capital letter (so removing trailing white space and
+punctuation).
 
 ```{r capital_letter_columns}
 add_capital_columns <- function(data) {
@@ -335,10 +648,12 @@ train_set <- add_capital_columns(train_set)
 test_set <- add_capital_columns(test_set)
 ```
 
-Using a ridge plot, I can see that while most ham messages have only a few capital
-letters, there's a long tail. There's also overlap between spam and ham messages
-at the lower end of the range. Messages with 5 to 30 capitals are more likely to
-be spam messages, but then spam messages also have a long tail.
+Using a ridge plot, I can see that while most ham messages have only a
+few capital letters, there's a long tail. There's also overlap between
+spam and ham messages at the lower end of the range. Messages with 5 to
+30 capitals are more likely to be spam messages, but then spam messages
+also have a long tail.
+
 ```{r compare_number_of_caps, echo=FALSE}
 train_set |> 
   ggplot(aes(capital_count, type, fill=type)) + 
@@ -348,12 +663,13 @@ train_set |>
   geom_density_ridges(bandwidth = 2, alpha=0.5)
 ```
 
-Comparing the length of the longest string of capital letters, there's a similar
-pattern. Both ham and spam messages have long tails and both overlap at the bottom
-of the range, with no string of two or more capital letters. However, while ham
-messages are much more likely to have no string than to have any length of capital
-letters in a row, spam messages have a wider distribution with a peak around a
-string of 5-10 characters.
+Comparing the length of the longest string of capital letters, there's a
+similar pattern. Both ham and spam messages have long tails and both
+overlap at the bottom of the range, with no string of two or more
+capital letters. However, while ham messages are much more likely to
+have no string than to have any length of capital letters in a row, spam
+messages have a wider distribution with a peak around a string of 5-10
+characters.
 
 ```{r compare_cap_length, echo=FALSE}
 train_set |> 
@@ -364,14 +680,15 @@ train_set |>
   geom_density_ridges(bandwidth=2, alpha=0.5)
 ```
 
-Looking only at messages where `longest_capitals` is greater than 0, I can see
-that most of the difference between spam and ham messages is driven by most ham
-messages not having a multi-capital-letter string. However, with those removed,
-it's more apparent that while spam messages peak at a slightly greater number,
-ham messages have a more substantial tail. This suggests that while having a
-`longest_capitals` length of 0 might give credence to a message being ham, the
-length of the string beyond that doesn't seem to be a clear indicator one way
-or another.
+Looking only at messages where `longest_capitals` is greater than 0, I
+can see that most of the difference between spam and ham messages is
+driven by most ham messages not having a multi-capital-letter string.
+However, with those removed, it's more apparent that while spam messages
+peak at a slightly greater number, ham messages have a more substantial
+tail. This suggests that while having a `longest_capitals` length of 0
+might give credence to a message being ham, the length of the string
+beyond that doesn't seem to be a clear indicator one way or another.
+
 ```{r compare_cap_length_filtered, echo=FALSE}
 train_set |> 
   filter(longest_capitals > 0) |>
@@ -384,17 +701,17 @@ train_set |>
 
 #### Message length
 
-Finally, I counted the total character length of the messages to examine if 
-there were any differences.
+Finally, I counted the total character length of the messages to examine
+if there were any differences.
 
 ```{r count_msg_length}
 train_set <- train_set |> mutate(msg_length = nchar(message))
 test_set <- test_set |> mutate(msg_length = nchar(message))
 ```
 
-I can see that, on average, ham messages are shorter than spam messages. However,
-once again, both types contain a number of outliers, with messages longer than
-250 characters being entirely ham messages.
+I can see that, on average, ham messages are shorter than spam messages.
+However, once again, both types contain a number of outliers, with
+messages longer than 250 characters being entirely ham messages.
 
 ```{r message_length, echo=FALSE}
 train_set |> 
@@ -407,18 +724,19 @@ train_set |>
 
 ### Model Development
 
-To compare model performance, I wanted to consider both precision and recall,
-but, as discussed earlier, giving more weight to recall. I tested each model
-against my previously held-out test set and compared the F-value, which computes
-the harmonic average of precision and recall. I used a weighted harmonic average
-with a beta value of 0.75, so that precision was weighted 0.75 times that of
-recall.
+To compare model performance, I wanted to consider both precision and
+recall, but, as discussed earlier, giving more weight to recall. I
+tested each model against my previously held-out test set and compared
+the F-value, which computes the harmonic average of precision and
+recall. I used a weighted harmonic average with a beta value of 0.75, so
+that precision was weighted 0.75 times that of recall.
 
 #### Model 1: Guessing
 
-To get a baseline, I first tested an extremely simple model, guessing whether
-a message is spam or ham, assuming the same proportions of spam messages that
-are in the training set.
+To get a baseline, I first tested an extremely simple model, guessing
+whether a message is spam or ham, assuming the same proportions of spam
+messages that are in the training set.
+
 ```{r model_1}
 p_spam <- sum(train_set$type == 'spam') / nrow(train_set)
 guess_y_hat <- sample(c('spam', 'ham'), nrow(test_set), replace = TRUE, prob = c(p_spam, 1 - p_spam)) |>
@@ -434,12 +752,14 @@ guess_f_meas
 
 #### Model 2: Using longest number
 
-During the analysis, I found that messages with long strings of digits are
-more likely to be spam. For the second model, all messages with the longest
-string of digits above a certain cutoff are classified as spam, all others as
-ham. To find the cutoff, I compared the F-value against the training set for
-cutoffs ranging from 0 to 15. A cutoff of 4 provided the optimal value, so
-I then tested on the test set, using that cutoff.
+During the analysis, I found that messages with long strings of digits
+are more likely to be spam. For the second model, all messages with the
+longest string of digits above a certain cutoff are classified as spam,
+all others as ham. To find the cutoff, I compared the F-value against
+the training set for cutoffs ranging from 0 to 15. A cutoff of 4
+provided the optimal value, so I then tested on the test set, using that
+cutoff.
+
 ```{r model_2}
 # Determined through tuning on the training set
 cutoff <- 4
@@ -458,13 +778,15 @@ This improves performance dramatically over guessing.
 
 #### Model 3: Generalized linear model
 
-Because messages are either spam or ham, which can be represented as 0 and 1,
-a generalized linear model or logistic regression model makes more sense than
-a linear regression model, which would allow for values below 0 or above 1. A
-logistic regression model converts the probability to log odds, calculating
-how much more likely it is that a message will be spam than that it will not
-be spam. Rather than a simple binary cutoff, I can use a linear regression model
-to calculate whether a message is likely spam or ham given a value.
+Because messages are either spam or ham, which can be represented as 0
+and 1, a generalized linear model or logistic regression model makes
+more sense than a linear regression model, which would allow for values
+below 0 or above 1. A logistic regression model converts the probability
+to log odds, calculating how much more likely it is that a message will
+be spam than that it will not be spam. Rather than a simple binary
+cutoff, I can use a linear regression model to calculate whether a
+message is likely spam or ham given a value.
+
 ```{r model_3}
 glm_digit_length_fit <- train_set |>
   mutate(y = as.numeric(type == "spam")) |>
@@ -485,11 +807,13 @@ glm_digit_length_f_meas <- F_meas(
 glm_digit_length_f_meas
 ```
 
-This did less well than finding a cut-off. While messages with longer numbers
-are more likely to be spam, the data is approximately bivariate normal.
+This did less well than finding a cut-off. While messages with longer
+numbers are more likely to be spam, the data is approximately bivariate
+normal.
 
-I also considered looking at more than one variable. For example, messages with
-more numbers and with more capital letters both tended to be spam messages.
+I also considered looking at more than one variable. For example,
+messages with more numbers and with more capital letters both tended to
+be spam messages.
 
 ```{r number_count_vs_capital_count}
 train_set |>
@@ -499,27 +823,29 @@ train_set |>
   geom_point()
 ```
 
-While the data is mostly grouped between ham and spam messages, the relationship
-is not linear.
+While the data is mostly grouped between ham and spam messages, the
+relationship is not linear.
 
 #### Model 4: K-Nearest Neighbor
 
-K-Nearest Neighbor (KNN) identifies the k closest data points to an item and
-makes the prediction based on the average of the closest data points. One
-advantage it has over logistic or linear regression here is that it does not
-assume the data is distributed in any particular way. Since ham and spam messages
-tend to be clustered near similar messages, predicting the classification based
-on the nearest other messages might yield better results.
+K-Nearest Neighbor (KNN) identifies the k closest data points to an item
+and makes the prediction based on the average of the closest data
+points. One advantage it has over logistic or linear regression here is
+that it does not assume the data is distributed in any particular way.
+Since ham and spam messages tend to be clustered near similar messages,
+predicting the classification based on the nearest other messages might
+yield better results. [@GeeksForGeeksKNN]
 
-I used the `caret` package to train the model and perform cross-validation with
-bootstrap samples to determine which value of k performed best. Bootstrap 
-sampling takes a sample with replacement of the training dataset to approximate
-the full dataset. The `train` method does this 25 times (the default value) for
-each parameter and calculates the accuracy. This approximates the distribution
-across the full dataset. I used the same weighted F value for accuracy that has 
-been used on models previously. Whatever parameter value gives the highest 
-accuracy when the 25 tests are averaged together is what's used in the final 
-model.
+I used the `caret` package to train the model and perform
+cross-validation with bootstrap samples to determine which value of k
+performed best. Bootstrap sampling takes a sample with replacement of
+the training dataset to approximate the full dataset. The `train` method
+does this 25 times (the default value) for each parameter and calculates
+the accuracy. This approximates the distribution across the full
+dataset. I used the same weighted F value for accuracy that has been
+used on models previously. Whatever parameter value gives the highest
+accuracy when the 25 tests are averaged together is what's used in the
+final model.
 
 ```{r knn_tune}
 knn_fit <- train(
@@ -548,16 +874,16 @@ knn_f_meas
 
 #### Model 5: Classification Tree
 
-Another way to classify messages is to look at various combinations of factors.
-For instance, I've already seen that messages with long strings of numbers are
-likely to be spam. Messages with more than 5 capital letters in a row are
-likely spam unless they have more than 50 capital letters, in which case, 
-they're likely ham.
+Another way to classify messages is to look at various combinations of
+factors. For instance, I've already seen that messages with long strings
+of numbers are likely to be spam. Messages with more than 5 capital
+letters in a row are likely spam unless they have more than 50 capital
+letters, in which case, they're likely ham.
 
-A classification tree establishes a set of rules or series of if/else conditions
-to determine the prediction. The complexity parameter (cp) is the value that 
-can be tuned here to determine the optimal minimum by which adding another split
-must improve the model.
+A classification tree establishes a set of rules or series of if/else
+conditions to determine the prediction. The complexity parameter (cp) is
+the value that can be tuned here to determine the optimal minimum by
+which adding another split must improve the model [@Irizarry2].
 
 ```{r class_tree_fit}
 class_tree_fit <- train(
@@ -578,21 +904,24 @@ class_tree_f_meas <- F_meas(
 class_tree_f_meas
 ```
 
-Plotting the final model shows what variables and cut-off values were used.
+Plotting the final model shows what variables and cut-off values were
+used.
 
 ```{r class_tree_plot}
 plot(class_tree_fit$finalModel, margin = 0.1)
 text(class_tree_fit$finalModel, cex = 0.75)
 ```
 
-The model only needed the number of occurrences of top spam words and the length
-of the longest number to predict the outcome.
+The model only needed the number of occurrences of top spam words and
+the length of the longest number to predict the outcome.
 
 #### Model 6: Random Forest
-Random forest builds on the classification tree idea by randomly selecting
-bootstrap samples and building classification trees from the samples, using 
-randomly selected features. The resulting trees create the "forest", and the
-average prediction of all the trees determines the final prediction.
+
+Random forest builds on the classification tree idea by randomly
+selecting bootstrap samples and building classification trees from the
+samples, using randomly selected features. The resulting trees create
+the "forest", and the average prediction of all the trees determines the
+final prediction [@Irizarry2].
 
 ```{r random_tree_fit}
 random_forest_fit <- train(
@@ -614,28 +943,30 @@ random_forest_f_meas <- F_meas(
 random_forest_f_meas
 ```
 
-When reviewing the relative importance of the various factors, I can see that
-`top_spam_words_count` had the greatest impact. That is the same factor that was
-used in the first split in the classification tree model.
+When reviewing the relative importance of the various factors, I can see
+that `top_spam_words_count` had the greatest impact. That is the same
+factor that was used in the first split in the classification tree
+model.
 
 ```{r random_tree_importance, echo=FALSE}
 importance(random_forest_fit$finalModel)
 ```
 
-
 ### Ensembles
 
-After testing models one at a time, I considered whether combining predictions
-from multiple models could yield better results.
+After testing models one at a time, I considered whether combining
+predictions from multiple models could yield better results.
 
-One challenge is that I wanted to only use models that were among the most
-accurate, but I could not use the previously computed accuracy results, because
-they were based on test data. Using the results from testing on the test set
-to determine which model to use would pollute my data.
+One challenge is that I wanted to only use models that were among the
+most accurate, but I could not use the previously computed accuracy
+results, because they were based on test data. Using the results from
+testing on the test set to determine which model to use would pollute my
+data.
 
-Instead, I used the same bootstrap approach used for tuning the model parameters.
-I created five bootstrap samples from the training data, predicted the outcome
-for each using the existing models, and averaged the resulting F-values.
+Instead, I used the same bootstrap approach used for tuning the model
+parameters. I created five bootstrap samples from the training data,
+predicted the outcome for each using the existing models, and averaged
+the resulting F-values.
 
 ```{r bootstrap_accuracy, echo=FALSE}
 folds = createResample(train_set$type, times = 5)
@@ -721,21 +1052,22 @@ tibble(
 )
 ```
 
-Five of the models had F-values of greater than 0.9 against the training data
-bootstrap samples. 
+Five of the models had F-values of greater than 0.9 against the training
+data bootstrap samples.
 
 #### Voting
 
-The first ensemble model I tried was a voting method. Since Longest number and
-Logistic regression were both models based on the `longest_number` feature, I
-only used one of them. I chose Longest number because it performed better in
-my bootstrap sample.
+The first ensemble model I tried was a voting method. Since Longest
+number and Logistic regression were both models based on the
+`longest_number` feature, I only used one of them. I chose Longest
+number because it performed better in my bootstrap sample.
 
-This left me with an even number of models, so I had to determine how to handle
-ties. Since I had decided that not misidentifying ham was more important than
-not misidentifying spam, in case of a tie, the message was classified as ham.
-That meant that 3 out of the 4 models had to consider a message spam in order
-to classify it as such.
+This left me with an even number of models, so I had to determine how to
+handle ties. Since I had decided that not misidentifying ham was more
+important than not misidentifying spam, in case of a tie, the message
+was classified as ham. That meant that 3 out of the 4 models had to
+consider a message spam in order to classify it as such.
+
 ```{r ensemble_voting}
 ensemble_vote_fit <- cbind(long_number_y_hat, class_tree_y_hat, random_forest_y_hat, knn_y_hat)
 ensemble_vote_y_hat <- apply(ensemble_vote_fit, 1, function(r) {
@@ -750,13 +1082,13 @@ ensemble_vote_f_meas <- F_meas(
 ensemble_vote_f_meas
 ```
 
-
 #### Mean Probability
 
-The second ensemble model I tried was by calculating the probability of a message
-being spam, using the top three models: KNN, Classification Tree, and Random Forest.
-I took the mean of the three probabilities and used the mean probability to
-predict whether the message was spam or ham.
+The second ensemble model I tried was by calculating the probability of
+a message being spam, using the top three models: KNN, Classification
+Tree, and Random Forest. I took the mean of the three probabilities and
+used the mean probability to predict whether the message was spam or
+ham.
 
 ```{r ensemble_mean}
 # Re-generate predictions to get the probability of the item being spam
@@ -780,9 +1112,9 @@ ensemble_mean_f_meas
 
 ## Results
 
-While the ensemble mean approach improved the results over the classification
-tree and KNN models on their own, the random forest model gave the most accurate
-results overall.
+While the ensemble mean approach improved the results over the
+classification tree and KNN models on their own, the random forest model
+gave the most accurate results overall.
 
 ```{r final_results, echo=FALSE}
 tibble(
@@ -791,11 +1123,11 @@ tibble(
 )
 ```
 
-The full confusion matrix details that the random forest model has specificity/recall
-over 99% and a slightly lower sensitivity/precision. It correctly
-classified 99% of the messages in the test set overall and 94% of the spam 
-messages. Importantly, only 2 of the 966 ham messages were incorrectly classified
-as spam.
+The full confusion matrix details that the random forest model has
+specificity/recall over 99% and a slightly lower sensitivity/precision.
+It correctly classified 99% of the messages in the test set overall and
+94% of the spam messages. Importantly, only 2 of the 966 ham messages
+were incorrectly classified as spam.
 
 ```{r confusion_matrix}
 confusionMatrix(random_forest_y_hat, test_set$type, positive = "spam")
@@ -803,32 +1135,19 @@ confusionMatrix(random_forest_y_hat, test_set$type, positive = "spam")
 
 ## Conclusion
 
-Overall, a random forest model works well for classifying spam messages using
-factors such as the presence of words known to be used more often in spam messages,
-long strings of digits such as phone numbers, and numbers of digits or capital
-letters.
+Overall, a random forest model works well for classifying spam messages
+using factors such as the presence of words known to be used more often
+in spam messages, long strings of digits such as phone numbers, and
+numbers of digits or capital letters.
 
-Further research could be done using a more recently-collected data set. The
-dataset used here was donated in 2012, and changes in technology and communication
-styles may have changed what makes a message identifiable as spam. Other factors
-that could be considered in a future study would be whether emoji usage or
-attachments such as photos are indicative of a message being spam or ham. In
-addition, the work here attempts to identify messages as spam or ham based only
-on the message content. Other context about the message itself, such as whether
-the receiver has communicated with the sender before or whether the message was
-sent via an automated program or another phone, could potentially further
-improve classification.
-
-# https://www.pewresearch.org/internet/2025/07/31/online-scams-and-attacks-in-america-today/
-# https://www.orbitmedia.com/blog/spam-statistics/
-# https://api.ctia.org/wp-content/uploads/2023/05/230523-CTIA-Messaging-Principles-and-Best-Practices-FINAL.pdf
-# https://consumer.ftc.gov/articles/how-recognize-report-spam-text-messages
-# https://api.ctia.org/wp-content/uploads/2025/10/Messaging-Security-Best-Practices-_October-2025.pdf
-# https://dl.acm.org/doi/epdf/10.1145/2034691.2034742
-# https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/resampling-methods.html
-# https://www.nature.com/articles/s41746-024-01360-w
-# https://en.wikipedia.org/wiki/Odds_ratio
-# https://blog.emojipedia.org/major-moments-in-emoji-history-1995-to-2025/
-# https://rafalab.dfci.harvard.edu/dsbook/introduction-to-machine-learning.html#balanced-accuracy-and-f_1-score
-# https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/resampling-methods.html#sec-knn-cv-intro
-# https://www.geeksforgeeks.org/machine-learning/k-nearest-neighbours/
+Further research could be done using a more recently-collected data set.
+The dataset used here was donated in 2011, and changes in technology and
+communication styles may have changed what makes a message identifiable
+as spam. Other factors that could be considered in a future study would
+be whether emoji usage or attachments such as photos are indicative of a
+message being spam or ham. In addition, the work here attempts to
+identify messages as spam or ham based only on the message content.
+Other context about the message itself, such as whether the receiver has
+communicated with the sender before or whether the message was sent via
+an automated program or another phone, could potentially further improve
+classification.
